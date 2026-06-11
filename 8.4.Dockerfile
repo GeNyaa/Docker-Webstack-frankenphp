@@ -82,7 +82,9 @@ COPY --from=surnet/alpine-wkhtmltopdf:3.23.2-0.12.6-full /bin/libwkhtmltox* /bin
 COPY environment/etc/services.d/redis /etc/services.d/redis
 RUN sed -i 's|  --protected-mode no|  --protected-mode no \\\n  --maxmemory 64mb \\\n  --maxmemory-policy allkeys-lru|' /etc/services.d/redis/run
 RUN mkdir -p /redis-data \
-    && chown -R redis:redis /redis-data
+    && chown -R redis:redis /redis-data \
+    && chmod +x /etc/services.d/redis/run \
+    && chmod +x /etc/services.d/redis/finish
 
 # ClamAV user permissions
 RUN mkdir /var/run/clamav && \
