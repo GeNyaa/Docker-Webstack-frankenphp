@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv sh
+exec s6-setuidgid redis redis-server \
+  --dir /redis-data \
+  --bind 0.0.0.0 \
+  --protected-mode no
