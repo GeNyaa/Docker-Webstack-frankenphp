@@ -29,14 +29,6 @@ clean:
 	rm -rf files/s6-overlay || true
 	docker rmi $(PROJECTNAME):$(TAG) || true; \
 
-test:
-	if [ "$(TAG)" = "UNDEF" ]; then echo "please provide a valid TAG" && exit 1; fi
-	while docker ps | grep genyaa_webstack_instance | grep -q "(health: starting)"; do sleep 1; done
-	docker ps | grep genyaa_webstack_instance | grep -q "(healthy)"
-	docker exec -t genyaa_webstack_instance php-fpm --version | grep -q "PHP $(PHP_VERSION)"
-	wget -q localhost:8080 -O- | grep -q "PHP Version $(PHP_VERSION)"
-	wget -q localhost:8080 -O- | grep -q '<tr><td class="e">USER </td><td class="v">php </td></tr>'; \
-
 shell:
 	docker exec -ti genyaa_webstack_instance /bin/sh
 
