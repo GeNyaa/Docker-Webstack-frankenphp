@@ -79,7 +79,7 @@ COPY --from=surnet/alpine-wkhtmltopdf:3.23.2-0.12.6-full /bin/wkhtmltoimage /bin
 COPY --from=surnet/alpine-wkhtmltopdf:3.23.2-0.12.6-full /bin/libwkhtmltox* /bin/
 
 # Copy Redis Service and create data storage
-COPY env_resources/environment/etc/services.d/redis /etc/services.d/redis
+COPY environment/etc/services.d/redis /etc/services.d/redis
 RUN sed -i 's|  --protected-mode no|  --protected-mode no \\\n  --maxmemory 64mb \\\n  --maxmemory-policy allkeys-lru|' /etc/services.d/redis/run
 RUN mkdir -p /redis-data \
     && chown -R redis:redis /redis-data
@@ -93,7 +93,7 @@ RUN mkdir /var/run/clamav && \
     chmod 750 /var/run/clamav
 
 # ClamAV Configuration update
-COPY env_resources/environment/transfer/clamav /transfer/clamav
+COPY environment/transfer/clamav /transfer/clamav
 RUN sed -i 's/^LocalSocketGroup .*$/LocalSocketGroup php/g' /etc/clamav/clamd.conf \
     && sed -i '/Foreground/s/^#//g' /etc/clamav/clamd.conf \
     && sed -i '/Foreground/s/^#//g' /etc/clamav/freshclam.conf \
