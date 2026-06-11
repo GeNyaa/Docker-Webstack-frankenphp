@@ -18,7 +18,7 @@ RUN install-php-extensions \
     sodium \
     sockets \
     xdebug \
-    zip \
+    zip
 
 # Setup user permissions
 RUN addgroup -S php \
@@ -97,7 +97,7 @@ COPY env_resources/environment/transfer/clamav /transfer/clamav
 RUN sed -i 's/^LocalSocketGroup .*$/LocalSocketGroup php/g' /etc/clamav/clamd.conf \
     && sed -i '/Foreground/s/^#//g' /etc/clamav/clamd.conf \
     && sed -i '/Foreground/s/^#//g' /etc/clamav/freshclam.conf \
-    && sed -i 's/^User .*$/User php/g' /etc/clamav/clamd.conf \
+    && sed -i 's/^User .*$/User php/g' /etc/clamav/clamd.conf
 
 # Update ClamAV
 RUN freshclam  # Update virus definitions
